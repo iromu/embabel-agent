@@ -15,60 +15,13 @@
  */
 package com.embabel.agent.shell.config
 
-import com.embabel.agent.shell.ShellCommands
+import com.embabel.agent.shell.ShellConfig
 import org.springframework.aot.hint.RuntimeHints
 import org.springframework.aot.hint.RuntimeHintsRegistrar
 
 class ShellRuntimeHints : RuntimeHintsRegistrar {
     override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
-        hints.reflection().registerType(
-            ShellCommands::class.java,
-            { hint -> hint.withMembers() })
-//        hints.reflection().registerType(ShellCommands::class.java, MemberCategory.INVOKE_DECLARED_METHODS)
-
-
-        // Register reflection hints for main shell components
-//        hints.reflection().registerType(ShellCommands::class.java) { builder ->
-//            builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_PUBLIC_METHODS)
-//        }
-//
-//        hints.reflection().registerType(ShellConfig::class.java) { builder ->
-//            builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS)
-//        }
-
-//        hints.reflection().registerType(ToolsStats::class.java) { builder ->
-//            builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS)
-//        }
-//
-//        hints.reflection().registerType(ModelProvider::class.java) { builder ->
-//            builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS)
-//        }
-
-//        hints.reflection().registerType(ChatConfig::class.java) { builder ->
-//            builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS)
-//        }
-//
-//        hints.reflection().registerType(ShellProperties::class.java) { builder ->
-//            builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS)
-//        }
-//
-//        // Register KotlinModule for Jackson
-//        hints.reflection().registerType(KotlinModule::class.java) { builder ->
-//            builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS)
-//        }
-//
-//        // Register ShellMethod annotation (used by Spring Shell)
-//        hints.reflection().registerType(TypeReference.of("org.springframework.shell.standard.ShellMethod")) { builder ->
-//            builder.withMembers()
-//        }
-
-        // Register annotation access
-        hints.reflection().registerType(
-            org.springframework.shell.standard.ShellMethod::class.java
-        )
-        hints.reflection().registerType(
-            org.springframework.shell.standard.ShellComponent::class.java
-        )
-
+        hints.reflection().registerType(ShellConfig::class.java)
+        hints.reflection().registerType(ShellConfig.ChatConfig::class.java)
     }
 }

@@ -15,16 +15,20 @@
  */
 package com.embabel.agent.config
 
-import com.embabel.common.util.UtilRuntimeHints
-import org.springframework.context.annotation.Configuration
+import com.embabel.agent.domain.io.UserInput
+import org.springframework.aot.hint.RuntimeHints
+import org.springframework.aot.hint.RuntimeHintsRegistrar
+import org.springframework.aot.hint.MemberCategory
 import org.springframework.context.annotation.ImportRuntimeHints
 
-@ImportRuntimeHints(
-    UtilRuntimeHints::class,
-    ToolRuntimeHints::class,
-    RankingsHints::class,
-//    AgentReflectionHints::class
-//    AutoUserInputReflectionHints::class
-)
-@Configuration(proxyBeanMethods = false)
-class RuntimeHintsConfig
+class AgentReflectionHints : RuntimeHintsRegistrar {
+    override fun registerHints(hints: RuntimeHints, classLoader: ClassLoader?) {
+        hints.reflection().registerType(UserInput::class.java) {
+            it.withMembers(
+                    MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
+                    MemberCategory.DECLARED_FIELDS,
+                    MemberCategory.INVOKE_PUBLIC_METHODS
+            )
+        }
+    }
+}
